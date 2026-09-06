@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Jaga | The World's Best Guide Dog</title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: { jaga: { 500: '#dd4927' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --primary: #dd4927;
+            --bg: #0a0a0a;
+            --card: #141414;
+        }
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: var(--bg);
+            font-family: 'Outfit', sans-serif;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: var(--primary);
+            z-index: 9999;
+            transition: width 0.08s linear;
+        }
+
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.3;
+            margin: 0;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        @media (min-width: 640px) {
+            .section-title {
+                font-size: 3.25rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .section-title {
+                font-size: 4rem;
+            }
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 1.5rem;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+        .card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .icon-square {
+            background: var(--primary);
+            color: #000;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .icon-square i {
+            color: #000;
+        }
+        .icon-sm {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+        .icon-md {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 0.75rem;
+            font-size: 1.5rem;
+        }
+        .icon-lg {
+            width: 4.5rem;
+            height: 4.5rem;
+            border-radius: 1rem;
+            font-size: 2rem;
+        }
+        .icon-xl {
+            width: 5.5rem;
+            height: 5.5rem;
+            border-radius: 1.25rem;
+            font-size: 2.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-primary:hover {
+            background: #c43d22;
+            transform: scale(1.02);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s ease, border-color 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--primary);
+        }
+
+        .btn-survey {
+            background: var(--primary);
+            color: #fff;
+            padding: 0.75rem 2.5rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: background 0.2s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 0 30px rgba(221, 73, 39, 0.25);
+        }
+        .btn-survey:hover {
+            background: #c43d22;
+            transform: scale(1.04) translateY(-2px);
+            box-shadow: 0 0 50px rgba(221, 73, 39, 0.4);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.4rem 0.75rem;
+            border-radius: 9999px;
+            transition: color 0.2s ease, background 0.2s ease;
+            text-decoration: none;
+            position: relative;
+        }
+        .nav-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .nav-link.active {
+            color: var(--primary);
+            background: rgba(221, 73, 39, 0.08);
+        }
+        .nav-link .dot {
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.25s ease;
+        }
+        .nav-link:hover .dot,
+        .nav-link.active .dot {
+            width: 50%;
+        }
+
+        /* ---- Scroll Reveal ---- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .stagger>* {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .stagger.active>*:nth-child(1) {
+            transition-delay: 0.05s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .stagger.active>*:nth-child(2) {
+            transition-delay: 0.12s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .stagger.active>*:nth-child(3) {
+            transition-delay: 0.19s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .stagger.active>*:nth-child(4) {
+            transition-delay: 0.26s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---- Timeline ---- */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary);
+            transform: translateX(-50%);
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            width: 14px;
+            height: 14px;
+            background: var(--primary);
+            border: 2px solid var(--bg);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 0 3px rgba(221, 73, 39, 0.2);
+            transition: all 0.3s ease;
+        }
+        .timeline-item:hover .timeline-dot {
+            transform: translateX(-50%) scale(1.2);
+            box-shadow: 0 0 0 6px rgba(221, 73, 39, 0.15);
+        }
+
+        /* ---- Specs ---- */
+        .spec-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.25rem 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .spec-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        .spec-item {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.85rem;
+        }
+        .spec-item .label {
+            color: #888;
+            font-weight: 400;
+            min-width: 100px;
+            font-size: 0.8rem;
+        }
+        .spec-item .value {
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+        .float {
+            animation: float 5s ease-in-out infinite;
+        }
+        .float-d1 {
+            animation: float 5s ease-in-out 1.5s infinite;
+        }
+        .float-d2 {
+            animation: float 5s ease-in-out 3s infinite;
+        }
+
+        .sound-wave {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            height: 28px;
+        }
+        .sound-wave span {
+            width: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+        .sound-wave span:nth-child(1) {
+            height: 30%;
+            animation-delay: 0s;
+        }
+        .sound-wave span:nth-child(2) {
+            height: 60%;
+            animation-delay: 0.1s;
+        }
+        .sound-wave span:nth-child(3) {
+            height: 100%;
+            animation-delay: 0.2s;
+        }
+        .sound-wave span:nth-child(4) {
+            height: 55%;
+            animation-delay: 0.3s;
+        }
+        .sound-wave span:nth-child(5) {
+            height: 35%;
+            animation-delay: 0.4s;
+        }
+        @keyframes wave {
+            0%,
+            100% {
+                transform: scaleY(0.4);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        #mobile-menu {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(-6px);
+            pointer-events: none;
+        }
+        #mobile-menu.open {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 2.75rem;
+            height: 2.75rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 20px rgba(221, 73, 39, 0.3);
+            z-index: 100;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .back-to-top:hover {
+            transform: scale(1.08);
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+            .spec-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .spec-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.06;
+            pointer-events: none;
+            background: var(--primary);
+        }
+
+        /* ============================================================ */
+        /*   DRAMATIC SPOTLIGHT – TRIGGERED ON SCROLL                    */
+        /* ============================================================ */
+        .jaga-v3-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 50% 50%, #141414 0%, #0a0a0a 100%);
+            overflow: hidden;
+            padding: 4rem 0;
+            isolation: isolate;
+        }
+
+        /* All animated elements start hidden/paused */
+        .jaga-v3-section .spotlight,
+        .jaga-v3-section .flash,
+        .jaga-v3-section .jaga-v3-ring,
+        .jaga-v3-section .jaga-v3-particle,
+        .jaga-v3-section .jaga-v3-badge,
+        .jaga-v3-section .jaga-v3-sub,
+        .jaga-v3-section .jaga-v3-title,
+        .jaga-v3-section .jaga-v3-version-badge,
+        .jaga-v3-section .jaga-v3-tagline,
+        .jaga-v3-section .jaga-v3-feature,
+        .jaga-v3-section .jaga-v3-description,
+        .jaga-v3-section .jaga-v3-cta-wrapper {
+            opacity: 0;
+        }
+
+        /* ===== TRIGGERED STATE ===== */
+        .jaga-v3-section.triggered .spotlight {
+            opacity: 0;
+            animation: spotlightSweep 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .jaga-v3-section.triggered .flash {
+            opacity: 0;
+            animation: flashBang 5s ease-out forwards;
+        }
+        .jaga-v3-section.triggered .jaga-v3-ring {
+            animation: ringExpand 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .jaga-v3-section.triggered .jaga-v3-particle {
+            animation: particleFloat 5s ease-in-out forwards;
+        }
+        .jaga-v3-section.triggered .jaga-v3-badge {
+            opacity: 0;
+            animation: fadeUp 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.3s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-sub {
+            opacity: 0;
+            animation: fadeUp 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.6s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-title {
+            opacity: 0;
+            animation: titleReveal 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 1.2s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-version-badge {
+            opacity: 0;
+            animation: versionBadgePop 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 1.8s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-tagline {
+            opacity: 0;
+            animation: fadeUp 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 2.2s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-feature {
+            opacity: 0;
+            animation: featurePop 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .jaga-v3-section.triggered .jaga-v3-feature:nth-child(1) {
+            animation-delay: 2.6s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-feature:nth-child(2) {
+            animation-delay: 2.9s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-feature:nth-child(3) {
+            animation-delay: 3.2s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-description {
+            opacity: 0;
+            animation: fadeUp 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 3.6s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-cta-wrapper {
+            opacity: 0;
+            animation: fadeUp 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 4.2s;
+        }
+
+        /* Ring delays */
+        .jaga-v3-section.triggered .jaga-v3-ring-1 {
+            animation-delay: 0.2s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-ring-2 {
+            animation-delay: 0.6s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-ring-3 {
+            animation-delay: 1s;
+        }
+
+        /* Particle delays */
+        .jaga-v3-section.triggered .jaga-v3-particle:nth-child(1) {
+            animation-delay: 0.5s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-particle:nth-child(2) {
+            animation-delay: 1.2s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-particle:nth-child(3) {
+            animation-delay: 1.8s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-particle:nth-child(4) {
+            animation-delay: 2.5s;
+        }
+        .jaga-v3-section.triggered .jaga-v3-particle:nth-child(5) {
+            animation-delay: 1s;
+        }
+
+        /* ===== KEYFRAMES ===== */
+        @keyframes spotlightSweep {
+            0% {
+                opacity: 0;
+                background: radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+                transform: scale(0.5) translate(-20%, -20%);
+            }
+            30% {
+                opacity: 1;
+                background: radial-gradient(circle at 40% 50%, rgba(255, 255, 255, 0.25) 0%, transparent 50%);
+                transform: scale(1) translate(0, 0);
+            }
+            60% {
+                opacity: 0.8;
+                background: radial-gradient(circle at 60% 40%, rgba(255, 255, 255, 0.15) 0%, transparent 55%);
+                transform: scale(1.1) translate(0, 0);
+            }
+            100% {
+                opacity: 0.2;
+                background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+                transform: scale(1) translate(0, 0);
+            }
+        }
+
+        @keyframes flashBang {
+            0% {
+                opacity: 0;
+            }
+            35% {
+                opacity: 0;
+            }
+            42% {
+                opacity: 0.2;
+            }
+            48% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes ringExpand {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+                border-color: rgba(221, 73, 39, 0.4);
+            }
+            40% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0.8;
+                border-color: rgba(221, 73, 39, 0.2);
+            }
+            70% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.4;
+                border-color: rgba(221, 73, 39, 0.1);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.15;
+                border-color: rgba(221, 73, 39, 0.05);
+            }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) scale(0);
+            }
+            20% {
+                opacity: 0.1;
+                transform: translate(20px, -30px) scale(1.2);
+            }
+            50% {
+                opacity: 0.06;
+                transform: translate(-20px, 20px) scale(0.8);
+            }
+            80% {
+                opacity: 0.08;
+                transform: translate(30px, 20px) scale(1.1);
+            }
+            100% {
+                opacity: 0.03;
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes titleReveal {
+            0% {
+                opacity: 0;
+                transform: scale(1.5) rotate(-5deg);
+            }
+            60% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        @keyframes versionBadgePop {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-10deg);
+            }
+            60% {
+                opacity: 1;
+                transform: scale(1.1) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        @keyframes featurePop {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.9);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(0) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes legendaryGlow {
+            0%,
+            100% {
+                background-position: 0% 50%;
+                filter: drop-shadow(0 0 40px rgba(221, 73, 39, 0.12));
+            }
+            50% {
+                background-position: 100% 50%;
+                filter: drop-shadow(0 0 80px rgba(221, 73, 39, 0.25));
+            }
+        }
+
+        /* Jaga V3 title styling */
+        .jaga-v3-title {
+            font-size: 14vw;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 0.92;
+            background: linear-gradient(135deg, #dd4927 0%, #ff6b3a 25%, #dd4927 50%, #ff6b3a 75%, #dd4927 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: legendaryGlow 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 60px rgba(221, 73, 39, 0.15));
+            text-shadow: none;
+            font-family: 'Space Grotesk', sans-serif;
+            position: relative;
+            z-index: 2;
+        }
+
+        .jaga-v3-version-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #000;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 0.08em;
+            padding: 0.4rem 2rem;
+            border-radius: 9999px;
+            box-shadow: 0 0 40px rgba(221, 73, 39, 0.3);
+            font-family: 'Space Grotesk', sans-serif;
+            position: relative;
+            z-index: 2;
+        }
+        @media (min-width: 768px) {
+            .jaga-v3-version-badge {
+                font-size: 1.6rem;
+                padding: 0.5rem 2.5rem;
+            }
+        }
+
+        .jaga-v3-badge {
+            display: inline-block;
+            background: rgba(221, 73, 39, 0.12);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(221, 73, 39, 0.25);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            padding: 0.6rem 1.8rem;
+            border-radius: 9999px;
+            box-shadow: 0 0 30px rgba(221, 73, 39, 0.08);
+            position: relative;
+            z-index: 2;
+        }
+        .jaga-v3-badge i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        .jaga-v3-sub {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+        @media (min-width: 768px) {
+            .jaga-v3-sub {
+                font-size: 1.8rem;
+                letter-spacing: 0.5em;
+            }
+        }
+
+        .jaga-v3-tagline {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.08em;
+            position: relative;
+            z-index: 2;
+            margin-top: 0.5rem;
+        }
+        @media (min-width: 768px) {
+            .jaga-v3-tagline {
+                font-size: 1.4rem;
+                margin-top: 0.75rem;
+            }
+        }
+
+        .jaga-v3-feature {
+            text-align: center;
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 2;
+            min-width: 120px;
+        }
+        .jaga-v3-feature:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 10px 40px rgba(221, 73, 39, 0.1);
+        }
+        .jaga-v3-feature-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1;
+        }
+        .jaga-v3-feature-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 0.25rem;
+        }
+        @media (min-width: 768px) {
+            .jaga-v3-feature-number {
+                font-size: 3.5rem;
+            }
+        }
+
+        .jaga-v3-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: dotPulse 2s ease-in-out infinite;
+            margin: 0 0.5rem;
+        }
+        @keyframes dotPulse {
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* WHO Stat Card */
+        .jaga-v3-stat-card {
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(221, 73, 39, 0.15);
+            border-radius: 1.5rem;
+            padding: 2rem 2.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 2;
+        }
+        .jaga-v3-stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 0 60px rgba(221, 73, 39, 0.08);
+        }
+        .jaga-v3-stat-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+        .jaga-v3-stat-number .percent {
+            font-size: 2rem;
+        }
+        .jaga-v3-stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 0.5rem;
+        }
+        .jaga-v3-stat-sub {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-top: 0.25rem;
+        }
+        @media (min-width: 768px) {
+            .jaga-v3-stat-number {
+                font-size: 5rem;
+            }
+            .jaga-v3-stat-number .percent {
+                font-size: 2.5rem;
+            }
+        }
+
+        .jaga-v3-description p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        @media (min-width: 768px) {
+            .jaga-v3-description p {
+                font-size: 1.15rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- ========== NAVIGATION ========== -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/95 border-b border-white/5">
+        <div class="container mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+            <a href="#home" class="flex items-center gap-2 group">
+                <i class="fas fa-dog text-2xl text-[#dd4927] float"></i>
+                <span class="text-xl font-bold tracking-tight text-white font-display">Jaga <span class="text-[#dd4927]">|</span> ජාගරණය</span>
+            </a>
+            <nav class="hidden md:flex items-center gap-1">
+                <a href="#home" class="nav-link active" data-section="home">Home<span class="dot"></span></a>
+                <a href="#mission" class="nav-link" data-section="mission">Mission<span class="dot"></span></a>
+                <a href="#problem" class="nav-link" data-section="problem">Problem<span class="dot"></span></a>
+                <a href="#meet-jaga" class="nav-link" data-section="meet-jaga">Meet Jaga<span class="dot"></span></a>
+                <a href="#specs" class="nav-link" data-section="specs">Specs<span class="dot"></span></a>
+                <a href="#pricing" class="nav-link" data-section="pricing">Pricing<span class="dot"></span></a>
+                <a href="#survey" class="nav-link" data-section="survey">Survey<span class="dot"></span></a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <a href="#survey" class="hidden md:inline-flex btn-primary text-sm px-5 py-2"><i class="fas fa-clipboard-list"></i> Survey</a>
+                <button id="menuBtn" class="md:hidden text-white text-xl focus:outline-none" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden bg-[#141414] border-t border-white/5 px-4 py-4 flex flex-col gap-2">
+            <a href="#home" class="mobile-link text-white/70 hover:text-white py-2 px-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3"><i class="fas fa-home text-[#dd4927] w-5"></i> Home</a>
+            <a href="#mission" class="mobile-link text-white/70 hover:text-white py-2 px-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3"><i class="fas fa-bullseye text-[#dd4927] w-5"></i> Mission</a>
+            <a href="#problem" class="mobile-link text-white/70 hover:text-white py-2 px-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3"><i class="fas fa-exclamation-triangle text-[#dd4927] w-5"></i> Problem</a>
+            <a href="#meet-jaga" class="mobile-link text-white/70 hover:text-white py-2 px-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3"><i class="fas fa-robot text-[#dd4927] w-5"></i> Meet Jaga</a>
+            <a href="#specs" class="mobile-link text-white/70 hover:text-white py-2 px-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3"><i class="fas fa-microchip text-[#dd4927] w-5"></i> Specs</a>
+            <a href="#pricing" class="mobile-link text-white/70 hover:text-white py-2 px-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3"><i class="fas fa-tag text-[#dd4927] w-5"></i> Pricing</a>
+            <a href="#survey" class="mobile-link text-white/70 hover:text-white py-2 px-3 rounded-lg hover:bg-white/5 transition flex items-center gap-3"><i class="fas fa-clipboard-list text-[#dd4927] w-5"></i> Survey</a>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ========== HERO ========== -->
+        <section id="home" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+            <div class="orb w-96 h-96 -top-40 -left-40"></div>
+            <div class="orb w-80 h-80 top-1/2 -right-40"></div>
+            <div class="orb w-64 h-64 bottom-20 left-1/3"></div>
+
+            <div class="container mx-auto px-4 sm:px-6 relative z-10">
+                <div class="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-16">
+                    <div class="flex-1 text-center lg:text-left">
+                        <div class="reveal-left">
+                            <span class="inline-flex items-center gap-2 bg-[#dd4927] text-black px-4 py-1.5 rounded-full text-sm font-semibold">
+                                <i class="fas fa-trophy"></i> WRO 2026 Senior Champions
+                            </span>
+                        </div>
+                        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight text-white font-display mt-6 reveal-left" style="transition-delay:0.08s">
+                            <span class="block">The</span>
+                            <span class="block text-[#dd4927]">World's Best</span>
+                            <span class="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-1">guide dog</span>
+                        </h1>
+                        <p class="text-xl text-[#dd4927] font-semibold mt-3 font-display tracking-wide reveal-left" style="transition-delay:0.16s">Jaga | ජාගරණය — The Alert Guardian</p>
+                        <p class="text-gray-400 text-base sm:text-lg mt-4 max-w-xl mx-auto lg:mx-0 leading-relaxed reveal-left" style="transition-delay:0.24s">
+                            A next-generation robotic guide dog powered by AI and smartphone integration — restoring independence with <span class="text-[#dd4927] font-semibold">constant vigilance</span> and <span class="text-[#dd4927] font-semibold">protective awareness</span>.
+                        </p>
+                        <div class="flex flex-wrap gap-4 justify-center lg:justify-start mt-8 reveal-left" style="transition-delay:0.32s">
+                            <a href="#survey" class="btn-primary"><i class="fas fa-clipboard-list"></i> Take the Survey</a>
+                            <a href="#meet-jaga" class="btn-secondary"><i class="fas fa-robot"></i> Meet Jaga</a>
+                        </div>
+                        <div class="flex flex-wrap gap-6 justify-center lg:justify-start mt-8 text-sm text-gray-500 reveal-left" style="transition-delay:0.40s">
+                            <span class="flex items-center gap-2"><i class="fas fa-check-circle text-[#dd4927]"></i> 360° Sensing</span>
+                            <span class="flex items-center gap-2"><i class="fas fa-check-circle text-[#dd4927]"></i> Voice Controlled</span>
+                            <span class="flex items-center gap-2"><i class="fas fa-check-circle text-[#dd4927]"></i> AI-Powered</span>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 flex justify-center reveal-scale">
+                        <div class="relative w-full max-w-md lg:max-w-lg">
+                            <div class="absolute inset-0 bg-[#dd4927]/10 rounded-full blur-3xl scale-110"></div>
+                            <div class="relative bg-[#141414] p-3 rounded-3xl border border-white/5 shadow-2xl float">
+                                <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 aspect-square">
+                                    <img src="robotdg.jpeg" alt="Jaga robot" class="w-full h-full object-cover" id="heroImg" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                                    <div class="hidden w-full h-full items-center justify-center bg-[#dd4927]/20">
+                                        <div class="text-center"><i class="fas fa-robot text-7xl text-[#dd4927] mb-3"></i><p class="text-white font-semibold">Jaga Robot</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="absolute -bottom-4 -right-4 bg-[#dd4927] text-black rounded-xl px-4 py-2.5 shadow-xl float-d1">
+                                <div class="flex items-center gap-2"><i class="fas fa-eye"></i><div><div class="text-xs font-medium opacity-80">Status</div><div class="text-sm font-bold">Always Alert</div></div></div>
+                            </div>
+                            <div class="absolute -top-4 -left-4 bg-[#141414] border border-white/5 rounded-xl px-3 py-2 shadow-lg float-d2">
+                                <div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span><span class="text-xs font-semibold text-white">AI Active</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40">
+                <span class="text-[10px] uppercase tracking-widest text-gray-500">Scroll</span>
+                <div class="w-5 h-8 border border-gray-600 rounded-full flex justify-center pt-1.5"><div class="w-1 h-2 bg-[#dd4927] rounded-full animate-bounce"></div></div>
+            </div>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="section-divider"></div>
+
+        <!-- ========== NAME MEANING ========== -->
+        <section class="py-16 sm:py-20 bg-[#0a0a0a]">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="max-w-4xl mx-auto text-center">
+                    <div class="reveal">
+                        <span class="inline-flex items-center gap-2 bg-[#141414] border border-white/5 rounded-full px-5 py-2 text-sm text-gray-300"><i class="fas fa-leaf text-[#dd4927]"></i> Rooted in Sri Lankan Culture</span>
+                    </div>
+                    <h3 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white font-display mt-6 reveal">The Meaning Behind <span class="text-[#dd4927]">Jaga</span></h3>
+                    <div class="reveal mt-8">
+                        <div class="bg-[#141414] rounded-3xl p-8 sm:p-12 border border-white/5 relative">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-[#dd4927]/5 rounded-full blur-2xl -mr-10 -mt-10"></div>
+                            <div class="absolute bottom-0 left-0 w-24 h-24 bg-[#dd4927]/5 rounded-full blur-2xl -ml-10 -mb-10"></div>
+                            <div class="relative">
+                                <div class="text-6xl sm:text-7xl font-bold text-[#dd4927]/10 font-display mb-4">ජාග</div>
+                                <p class="text-gray-300 text-lg sm:text-xl leading-relaxed"><span class="font-bold text-[#dd4927] text-xl">Jaga (ජාගරණය)</span> — derived from the Sinhala word <span class="italic font-semibold">"Jāgarana"</span> — means <span class="font-bold text-[#dd4927]">alertness, vigilance, and wakefulness</span>. It embodies the essence of a guardian who never sleeps, constantly watchful and ready to respond.</p>
+                                <div class="mt-6 pt-6 border-t border-white/5"><p class="text-[#dd4927] italic text-lg font-display">"Always awake, always aware — the eternal guardian."</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="section-divider"></div>
+
+        <!-- ========== MISSION ========== -->
+        <section id="mission" class="py-16 sm:py-20 bg-[#0a0a0a]">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+                    <div class="icon-square icon-lg mx-auto mb-5"><i class="fas fa-bullseye"></i></div>
+                    <p class="section-label">Our Purpose</p>
+                    <h2 class="section-title text-white">Mission</h2>
+                    <div class="w-12 h-0.5 bg-[#dd4927] mx-auto mt-5 mb-5"></div>
+                    <p class="text-gray-400 text-lg leading-relaxed">Our mission is to empower visually impaired people with safer, smarter, and more independent mobility.</p>
+                    <p class="text-gray-400 text-lg leading-relaxed mt-3">Through JAGA, we combine robotics and intelligent technology to create a future where navigating the world is more accessible to everyone.</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto stagger">
+                    <div class="card p-8 text-center">
+                        <div class="icon-square icon-lg mx-auto mb-5"><i class="fas fa-eye"></i></div>
+                        <h3 class="text-xl font-bold text-white mb-2">Constant Vigilance</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Like its name Jaga, our robot maintains 24/7 awareness, detecting obstacles and hazards in real-time.</p>
+                    </div>
+                    <div class="card p-8 text-center">
+                        <div class="icon-square icon-lg mx-auto mb-5"><i class="fas fa-mobile-alt"></i></div>
+                        <h3 class="text-xl font-bold text-white mb-2">App-Powered Control</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Voice commands, destination input, and real-time audio guidance through your smartphone — intuitive and modern.</p>
+                    </div>
+                    <div class="card p-8 text-center">
+                        <div class="icon-square icon-lg mx-auto mb-5"><i class="fas fa-shield-alt"></i></div>
+                        <h3 class="text-xl font-bold text-white mb-2">Protective Guardian</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Jaga embodies the spirit of a watchful protector — always alert, ready to respond, and dedicated to your safety.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="section-divider"></div>
+
+        <!-- ========== THE PROBLEM ========== -->
+        <section id="problem" class="py-16 sm:py-20 bg-[#0a0a0a]">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-12 reveal">
+                        <div class="icon-square icon-lg mx-auto mb-5"><i class="fas fa-exclamation-triangle"></i></div>
+                        <p class="section-label">The Challenge</p>
+                        <h2 class="section-title text-white">The Problem</h2>
+                        <div class="w-12 h-0.5 bg-[#dd4927] mx-auto mt-5"></div>
+                    </div>
+
+                    <!-- WHO STATISTIC -->
+                    <div class="reveal mb-10" style="transition-delay:0.1s">
+                        <div class="jaga-v3-stat-card mx-auto max-w-2xl">
+                            <div class="flex flex-col items-center">
+                                <i class="fas fa-globe-americas text-3xl text-[#dd4927] mb-3 opacity-70"></i>
+                                <div class="jaga-v3-stat-number">
+                                    <span id="whoCounter">0</span><span class="percent">%</span>
+                                </div>
+                                <div class="jaga-v3-stat-label">of the world's population</div>
+                                <div class="jaga-v3-stat-sub">
+                                    <span id="whoBillionCounter">0</span> billion people
+                                </div>
+                                <div class="mt-3 text-xs text-gray-400 max-w-md leading-relaxed">
+                                    Based on data from the World Health Organization (WHO), roughly 27% of the world's population lives with some form of near or distance vision impairment.
+                                </div>
+                                <div class="mt-2 flex items-center gap-2 text-[10px] text-gray-500">
+                                    <i class="fas fa-database"></i>
+                                    <span>Source: WHO World Report on Vision</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reveal card p-8 sm:p-12 text-center relative overflow-hidden" style="transition-delay:0.2s">
+                        <div class="absolute top-0 right-0 w-48 h-48 bg-[#dd4927]/5 rounded-full blur-2xl -mr-20 -mt-20"></div>
+                        <div class="absolute bottom-0 left-0 w-40 h-40 bg-[#dd4927]/5 rounded-full blur-2xl -ml-20 -mb-20"></div>
+                        <div class="relative">
+                            <div class="text-5xl text-[#dd4927] mb-5"><i class="fas fa-route"></i></div>
+                            <p class="text-gray-300 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto">
+                                <strong>Visual impairment</strong> transforms everyday navigation into a challenging and often unsafe experience. Unfamiliar environments become disorienting, hidden hazards pose constant risk, and the loss of independence limits freedom, confidence, and quality of life.
+                            </p>
+                            <div class="flex flex-wrap gap-3 justify-center mt-7">
+                                <span class="bg-[#0a0a0a] border border-white/5 rounded-xl px-5 py-2.5 flex items-center gap-2 text-sm text-gray-300"><i class="fas fa-route text-[#dd4927]"></i> Unfamiliar routes</span>
+                                <span class="bg-[#0a0a0a] border border-white/5 rounded-xl px-5 py-2.5 flex items-center gap-2 text-sm text-gray-300"><i class="fas fa-exclamation-circle text-[#dd4927]"></i> Hidden hazards</span>
+                                <span class="bg-[#0a0a0a] border border-white/5 rounded-xl px-5 py-2.5 flex items-center gap-2 text-sm text-gray-300"><i class="fas fa-clock text-[#dd4927]"></i> Loss of independence</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="section-divider"></div>
+
+        <!-- ============================================================ -->
+        <!-- ========== MEET JAGA V3.0 — DRAMATIC SPOTLIGHT ============ -->
+        <!-- ============================================================ -->
+        <section id="meet-jaga" class="jaga-v3-section">
+
+            <!-- Flash overlay -->
+            <div class="flash"></div>
+
+            <!-- Spotlight -->
+            <div class="spotlight"></div>
+
+            <!-- Floating particles -->
+            <div class="jaga-v3-particle"></div>
+            <div class="jaga-v3-particle"></div>
+            <div class="jaga-v3-particle"></div>
+            <div class="jaga-v3-particle"></div>
+            <div class="jaga-v3-particle"></div>
+
+            <!-- Glow rings -->
+            <div class="jaga-v3-ring jaga-v3-ring-1"></div>
+            <div class="jaga-v3-ring jaga-v3-ring-2"></div>
+            <div class="jaga-v3-ring jaga-v3-ring-3"></div>
+
+            <div class="container mx-auto px-4 sm:px-6 relative z-10">
+                <div class="max-w-6xl mx-auto text-center">
+
+                    <!-- Badge -->
+                    <div>
+                        <span class="jaga-v3-badge"><i class="fas fa-star"></i> Next Generation</span>
+                    </div>
+
+                    <!-- Sub title -->
+                    <div class="mt-8">
+                        <p class="jaga-v3-sub">Introducing</p>
+                    </div>
+
+                    <!-- ===== MAIN TITLE ===== -->
+                    <div class="jaga-v3-title-wrapper mt-4">
+                        <h2 class="jaga-v3-title">JAGA</h2>
+                    </div>
+
+                    <!-- V3.0 Badge – separate and prominent -->
+                    <div class="mt-3">
+                        <span class="jaga-v3-version-badge">V3.0</span>
+                    </div>
+
+                    <!-- Tagline -->
+                    <div class="mt-2">
+                        <p class="jaga-v3-tagline">
+                            <span class="jaga-v3-dot"></span>
+                            The Alert Guardian — Engineered for Independence
+                            <span class="jaga-v3-dot"></span>
+                        </p>
+                    </div>
+
+                    <!-- Feature stats: 360°, AI, 24/7 -->
+                    <div class="mt-12 flex flex-wrap justify-center gap-4">
+                        <div class="jaga-v3-feature">
+                            <div class="jaga-v3-feature-number">360°</div>
+                            <div class="jaga-v3-feature-label">Environmental Perception</div>
+                        </div>
+                        <div class="jaga-v3-feature">
+                            <div class="jaga-v3-feature-number">AI</div>
+                            <div class="jaga-v3-feature-label">Intelligent Navigation</div>
+                        </div>
+                        <div class="jaga-v3-feature">
+                            <div class="jaga-v3-feature-number">24/7</div>
+                            <div class="jaga-v3-feature-label">Uninterrupted Vigilance</div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mt-8 jaga-v3-description">
+                        <p>A revolution in mobility. Jaga V3.0 combines advanced robotics, AI-driven intelligence, and seamless voice control to deliver the world's most sophisticated robotic guide dog.</p>
+                    </div>
+
+                    <!-- CTA Button -->
+                    <div class="mt-10 jaga-v3-cta-wrapper">
+                        <a href="#survey" class="btn-survey">
+                            <i class="fas fa-clipboard-list"></i> Share Your Feedback
+                            <i class="fas fa-arrow-right text-sm"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="section-divider"></div>
+
+        <!-- ========== SENSE · THINK · REACT ========== -->
+        <section id="sense-think-react" class="py-16 sm:py-20 bg-[#0a0a0a]">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-14 reveal">
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight text-white">
+                        <span class="text-[#dd4927]">SENSE.</span>
+                        <span class="text-white">THINK.</span>
+                        <span class="text-[#dd4927]">REACT.</span>
+                    </h2>
+                    <div class="w-12 h-0.5 bg-[#dd4927] mx-auto mt-5"></div>
+                </div>
+                <div class="max-w-4xl mx-auto reveal">
+                    <div class="card p-8 sm:p-12 text-center">
+                        <p class="text-gray-300 text-lg sm:text-xl leading-relaxed">JAGA perceives its surroundings, responds to obstacles, and makes intelligent decisions to help people move more safely and independently.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+                            <div class="bg-[#0a0a0a] rounded-2xl p-5 border border-[#dd4927]/40">
+                                <div class="text-3xl text-[#dd4927] mb-2"><i class="fas fa-eye"></i></div>
+                                <h4 class="font-bold text-[#dd4927]">Sense</h4>
+                                <p class="text-xs text-gray-400 mt-1">360° environmental perception</p>
+                            </div>
+                            <div class="bg-[#0a0a0a] rounded-2xl p-5 border border-[#dd4927]/40">
+                                <div class="text-3xl text-[#dd4927] mb-2"><i class="fas fa-brain"></i></div>
+                                <h4 class="font-bold text-[#dd4927]">Think</h4>
+                                <p class="text-xs text-gray-400 mt-1">Real-time intelligent decisions</p>
+                            </div>
+                            <div class="bg-[#0a0a0a] rounded-2xl p-5 border border-[#dd4927]/40">
+                                <div class="text-3xl text-[#dd4927] mb-2"><i class="fas fa-bolt"></i></div>
+                                <h4 class="font-bold text-[#dd4927]">React</h4>
+                                <p class="text-xs text-gray-400 mt-1">Instant obstacle response</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="section-divider"></div>
+
+        <!-- ========== TECHNICAL SPECIFICATIONS ========== -->
+        <section id="specs" class="py-16 sm:py-20 bg-[#0a0a0a]">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-14 reveal">
+                    <div class="icon-square icon-lg mx-auto mb-5"><i class="fas fa-microchip"></i></div>
+                    <p class="section-label">Hardware</p>
+                    <h2 class="section-title text-white">Technical Specifications</h2>
+                    <div class="w-12 h-0.5 bg-[#dd4927] mx-auto mt-5"></div>
+                    <p class="text-gray-500 mt-3 text-sm">Jaga V3.0 — Built for performance, reliability, and intelligence</p>
+                </div>
+                <div class="max-w-5xl mx-auto reveal">
+                    <div class="card p-6 sm:p-10">
+                        <div class="spec-grid">
+                            <div class="spec-item"><span class="label">Main Board</span><span class="value">RASPBERRY PI 5</span></div>
+                            <div class="spec-item"><span class="label">CPU</span><span class="value">Quad-core ARM Cortex-A76</span></div>
+                            <div class="spec-item"><span class="label">Primary Vision</span><span class="value">Camera system</span></div>
+                            <div class="spec-item"><span class="label">Obstacle Detection</span><span class="value">Distance / proximity sensors</span></div>
+                            <div class="spec-item"><span class="label">Environmental Awareness</span><span class="value">Real-time sensor input</span></div>
+                            <div class="spec-item"><span class="label">Power Management</span><span class="value">Regulated power distribution</span></div>
+                            <div class="spec-item"><span class="label">Control</span><span class="value">Computer-controlled actuation</span></div>
+                            <div class="spec-item"><span class="label">Suspension</span><span class="value">Integrated mechanical suspension</span></div>
+                            <div class="spec-item"><span class="label">USB</span><span class="value">USB 3.0 / USB 2.0</span></div>
+                            <div class="spec-item"><span class="label">Operating System</span><span class="value">Raspberry Pi OS / UBUNTU LITE</span></div>
+                            <div class="spec-item"><span class="label">Chassis</span><span class="value">Reinforced structural frame</span></div>
+                            <div class="spec-item"><span class="label">Body Material</span><span class="value">ABS &amp; PET G</span></div>
+                            <div class="spec-item"><span class="label">Top Lid</span><span class="value">PLA</span></div>
+                            <div class="spec-item"><span class="label">Manufacturing</span><span class="value">3D-printed components</span></div>
+                            <div class="spec-item"><span class="label">Design</span><span class="value">Modular mechanical architecture</span></div>
+                            <div class="spec-item"><span class="label">Motor Control</span><span class="value">Electronic motor controller</span></div>
+                            <div class="spec-item"><span class="label">Obstacle Navigation</span><span class="value">Autonomous obstacle response</span></div>
+                            <div class="spec-item"><span class="label">Movement</span><span class="value">Forward / backward / turning</span></div>
+                            <div class="spec-item"><span class="label">Drive System</span><span class="value">Motorized wheel system</span></div>
+                        </div>
+                        <div class="mt-8 pt-6 border-t border-white/5 text-center text-xs text-gray-500"><i class="fas fa-robot text-[#dd4927] mr-2"></i> Jaga V3.0 — Engineered for the visually impaired community</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="section-divider"></div>
+
+        <!-- ========== PRICING ========== -->
+        <section id="pricing" class="py-16 sm:py-20 bg-[#0a0a0a]">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-14 reveal">
+                    <div class="icon-square icon-lg mx-auto mb-5"><i class="fas fa-tag"></i></div>
+                    <p class="section-label">Investment</p>
+                    <h2 class="section-title text-white">Pricing</h2>
+                    <div class="w-12 h-0.5 bg-[#dd4927] mx-auto mt-5"></div>
+                    <p class="text-gray-500 mt-3 text-sm">Transparent cost breakdown for Jaga</p>
+                </div>
+                <div class="max-w-3xl mx-auto reveal">
+                    <div class="card p-8 sm:p-12 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-[#dd4927]/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+                        <div class="absolute bottom-0 left-0 w-64 h-64 bg-[#dd4927]/5 rounded-full blur-3xl -ml-32 -mb-32"></div>
+                        <div class="relative space-y-5">
+                            <div class="flex items-start gap-4 pb-5 border-b border-white/5">
+                                <div class="icon-square icon-sm flex-shrink-0"><i class="fas fa-microchip"></i></div>
+                                <div class="flex-1 flex flex-wrap items-center justify-between gap-2">
+                                    <span class="text-white font-medium">TurboPi / Raspberry Pi robotics platform</span>
+                                    <span class="text-[#dd4927] font-bold text-lg">200 USD</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 pb-5 border-b border-white/5">
+                                <div class="icon-square icon-sm flex-shrink-0"><i class="fas fa-cube"></i></div>
+                                <div class="flex-1 flex flex-wrap items-center justify-between gap-2">
+                                    <span class="text-white font-medium">3D-Printed Robot Body + Motors</span>
+                                    <span class="text-[#dd4927] font-bold text-lg">150 USD</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 pb-5 border-b border-white/5">
+                                <div class="icon-square icon-sm flex-shrink-0"><i class="fas fa-plug"></i></div>
+                                <div class="flex-1 flex flex-wrap items-center justify-between gap-2">
+                                    <span class="text-white font-medium">Misc. wiring, fasteners, connectors, small components</span>
+                                    <span class="text-[#dd4927] font-bold text-lg">150 USD</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 pt-2">
+                                <div class="icon-square icon-sm flex-shrink-0" style="background:#dd4927;"><i class="fas fa-calculator"></i></div>
+                                <div class="flex-1 flex flex-wrap items-center justify-between gap-2">
+                                    <span class="text-white font-bold text-lg">Total</span>
+                                    <span class="text-white font-extrabold text-2xl text-[#dd4927]">500 USD</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="section-divider"></div>
+
+        <!-- ========== HOW IT WORKS ========== -->
+        <section class="py-16 sm:py-20 bg-[#0a0a0a]">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+                    <span class="inline-flex items-center gap-2 bg-[#dd4927] text-black px-4 py-1.5 rounded-full text-sm font-semibold"><i class="fas fa-route"></i> Simple & Intuitive</span>
+                    <h2 class="section-title text-white mt-5">How Jaga Works</h2>
+                    <div class="w-12 h-0.5 bg-[#dd4927] mx-auto mt-4"></div>
+                    <p class="text-gray-500 mt-3 text-sm">Three simple steps to independent navigation</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto stagger">
+                    <div class="text-center">
+                        <div class="icon-square icon-md mx-auto mb-4"><i class="fas fa-microphone-alt"></i></div>
+                        <h3 class="text-lg font-bold text-white">1. Voice Command</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-2">Simply tell the app your destination. Jaga's AI processes your voice and plans the optimal route instantly.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="icon-square icon-md mx-auto mb-4"><i class="fas fa-brain"></i></div>
+                        <h3 class="text-lg font-bold text-white">2. Smart Navigation</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-2">Ultra-sonic sensors scan the environment in real-time while the onboard computer calculates safe paths.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="icon-square icon-md mx-auto mb-4"><i class="fas fa-headphones-alt"></i></div>
+                        <h3 class="text-lg font-bold text-white">3. Audio Guidance</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mt-2">Receive clear, concise voice instructions through your phone. No physical feedback needed — just pure audio guidance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="section-divider"></div>
+
+        <!-- ========== SURVEY SECTION ========== -->
+        <section id="survey" class="py-16 sm:py-20 bg-[#0a0a0a]">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-12 reveal">
+                        <div class="icon-square icon-lg mx-auto mb-5"><i class="fas fa-clipboard-list"></i></div>
+                        <p class="section-label">Help Us Improve</p>
+                        <h2 class="section-title text-white">Customer Pricing & Market Research</h2>
+                        <div class="w-12 h-0.5 bg-[#dd4927] mx-auto mt-5"></div>
+                        <p class="text-gray-400 max-w-2xl mx-auto mt-4 text-sm leading-relaxed">
+                            We are conducting this survey to understand how potential customers value JAGA, a robotic assistance dog designed to support visually impaired and disabled individuals. The survey focuses mainly on pricing, affordability, customer expectations, and purchasing decisions.
+                        </p>
+                    </div>
+
+                    <div class="reveal card p-8 sm:p-12 text-center relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-[#dd4927]/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+                        <div class="absolute bottom-0 left-0 w-64 h-64 bg-[#dd4927]/5 rounded-full blur-3xl -ml-32 -mb-32"></div>
+                        <div class="relative">
+                            <div class="flex flex-col items-center gap-6">
+                                <i class="fas fa-file-alt text-5xl text-[#dd4927]"></i>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white">Help Shape the Future of JAGA</h3>
+                                    <p class="text-gray-400 text-sm mt-2 max-w-md mx-auto">Your feedback will directly influence how we bring JAGA to the world.</p>
+                                </div>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLScE6_CWaT1Tq4lfPKy1n8J6OgvLjANx7plc66uwRMSjM2PnWg/viewform?usp=send_form" target="_blank" rel="noopener noreferrer" class="btn-survey">
+                                    <i class="fas fa-external-link-alt"></i> Take the Survey
+                                    <i class="fas fa-arrow-right text-sm"></i>
+                                </a>
+                                <p class="text-[10px] text-gray-500 mt-2">Takes approximately 3-5 minutes • Your responses are anonymous</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="section-divider"></div>
+
+        <!-- ========== TEAM ========== -->
+        <section id="team" class="py-16 sm:py-20 bg-[#0a0a0a]">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-14 reveal">
+                    <div class="icon-square icon-lg mx-auto mb-5"><i class="fas fa-users"></i></div>
+                    <p class="section-label">People</p>
+                    <h2 class="section-title text-white">Meet the Innovators</h2>
+                    <div class="w-12 h-0.5 bg-[#dd4927] mx-auto mt-5"></div>
+                    <p class="text-gray-500 mt-3 text-sm">Driven by passion, engineering excellence, and social impact</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto stagger">
+                    <div class="card overflow-hidden text-center group">
+                        <div class="relative h-48 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-[#dd4927] to-[#ab311d]"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="icon-square icon-xl"><i class="fas fa-microchip"></i></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#141414] to-transparent"></div>
+                        </div>
+                        <div class="p-6 relative">
+                            <div class="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 bg-[#0a0a0a] rounded-2xl border-2 border-[#dd4927] flex items-center justify-center text-2xl font-bold text-[#dd4927] font-display">O</div>
+                            <h3 class="text-xl font-bold text-white mt-4">Ometh</h3>
+                            <p class="text-[#dd4927] text-sm font-semibold">Hardware Specialist</p>
+                            <p class="text-gray-400 text-xs mt-3 leading-relaxed">Mechanical design, quadruped locomotion, and embedded systems. Engineered Jaga's durable chassis and smooth gait patterns.</p>
+                            <div class="flex justify-center gap-2 mt-4">
+                                <a href="#" class="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center text-gray-500 hover:text-[#dd4927] transition"><i class="fab fa-github text-xs"></i></a>
+                                <a href="#" class="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center text-gray-500 hover:text-[#dd4927] transition"><i class="fab fa-linkedin-in text-xs"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card overflow-hidden text-center group">
+                        <div class="relative h-48 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-[#dd4927] to-[#c43d22]"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="icon-square icon-xl"><i class="fas fa-satellite-dish"></i></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#141414] to-transparent"></div>
+                        </div>
+                        <div class="p-6 relative">
+                            <div class="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 bg-[#0a0a0a] rounded-2xl border-2 border-[#dd4927] flex items-center justify-center text-2xl font-bold text-[#dd4927] font-display">S</div>
+                            <h3 class="text-xl font-bold text-white mt-4">Sineth</h3>
+                            <p class="text-[#dd4927] text-sm font-semibold">Sensor Integration</p>
+                            <p class="text-gray-400 text-xs mt-3 leading-relaxed">Ultra-sonic sensor fusion, obstacle detection algorithms, and real-time environmental mapping for Jaga's awareness.</p>
+                            <div class="flex justify-center gap-2 mt-4">
+                                <a href="#" class="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center text-gray-500 hover:text-[#dd4927] transition"><i class="fab fa-github text-xs"></i></a>
+                                <a href="#" class="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center text-gray-500 hover:text-[#dd4927] transition"><i class="fab fa-linkedin-in text-xs"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card overflow-hidden text-center group">
+                        <div class="relative h-48 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-[#dd4927] via-[#c43d22] to-[#ab311d]"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="icon-square icon-xl"><i class="fas fa-code"></i></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#141414] to-transparent"></div>
+                        </div>
+                        <div class="p-6 relative">
+                            <div class="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 bg-[#0a0a0a] rounded-2xl border-2 border-[#dd4927] flex items-center justify-center text-2xl font-bold text-[#dd4927] font-display">N</div>
+                            <h3 class="text-xl font-bold text-white mt-4">Nethika</h3>
+                            <p class="text-[#dd4927] text-sm font-semibold">Code Programmer</p>
+                            <p class="text-gray-400 text-xs mt-3 leading-relaxed">Mobile app development, voice UI, navigation algorithms, and seamless Bluetooth integration for Jaga's companion app.</p>
+                            <div class="flex justify-center gap-2 mt-4">
+                                <a href="#" class="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center text-gray-500 hover:text-[#dd4927] transition"><i class="fab fa-github text-xs"></i></a>
+                                <a href="#" class="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center text-gray-500 hover:text-[#dd4927] transition"><i class="fab fa-linkedin-in text-xs"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-10 reveal">
+                    <div class="inline-flex items-center gap-3 bg-[#dd4927]/10 border border-[#dd4927]/40 rounded-2xl px-6 py-3.5">
+                        <i class="fas fa-quote-left text-[#dd4927]"></i>
+                        <p class="text-gray-300 text-sm italic">United by innovation, we bring Jaga — the ever-watchful guardian — to life.</p>
+                        <i class="fas fa-quote-right text-[#dd4927]"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="section-divider"></div>
+
+        <!-- ========== COMPETITION ========== -->
+        <section id="competition" class="py-16 sm:py-20 bg-[#0a0a0a]">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-14 reveal">
+                    <div class="icon-square icon-lg mx-auto mb-5"><i class="fas fa-trophy"></i></div>
+                    <p class="section-label">Achievement</p>
+                    <h2 class="section-title text-white">Competition Milestones</h2>
+                    <div class="w-12 h-0.5 bg-[#dd4927] mx-auto mt-5"></div>
+                    <p class="text-gray-500 mt-3 text-sm">Our journey to WRO 2026 victory</p>
+                </div>
+                <div class="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
+                    <div class="flex-1 reveal-left">
+                        <span class="inline-block bg-[#dd4927] text-black text-xs font-bold px-4 py-1.5 rounded-full mb-4"><i class="fas fa-globe-asia mr-1"></i> World Robotics Competition 2026</span>
+                        <h3 class="text-2xl font-bold text-white">WRO 2026 Champions</h3>
+                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">We're proud to be the <span class="font-semibold">World Robotics Competition (WRO) 2026</span> <span class="font-semibold text-[#dd4927]">Senior Category Champions</span> at <span class="font-semibold">Buhari Serendib School</span>. Jaga was judged on innovation, technical execution, and social impact.</p>
+                        <ul class="mt-5 space-y-2.5">
+                            <li class="flex items-start gap-3 bg-[#141414] rounded-xl p-3 border border-white/5"><i class="fas fa-check-circle text-[#dd4927] mt-0.5 text-sm"></i><span class="text-sm text-gray-300"><strong class="text-white">App-controlled navigation:</strong> Voice destination setting & real-time guidance</span></li>
+                            <li class="flex items-start gap-3 bg-[#141414] rounded-xl p-3 border border-white/5"><i class="fas fa-check-circle text-[#dd4927] mt-0.5 text-sm"></i><span class="text-sm text-gray-300"><strong class="text-white">Obstacle course:</strong> Dynamic avoidance using ultra-sonic sensors</span></li>
+                            <li class="flex items-start gap-3 bg-[#141414] rounded-xl p-3 border border-white/5"><i class="fas fa-check-circle text-[#dd4927] mt-0.5 text-sm"></i><span class="text-sm text-gray-300"><strong class="text-white">Guided navigation trial:</strong> User test through simulated urban environment</span></li>
+                            <li class="flex items-start gap-3 bg-[#141414] rounded-xl p-3 border border-white/5"><i class="fas fa-check-circle text-[#dd4927] mt-0.5 text-sm"></i><span class="text-sm text-gray-300"><strong class="text-white">Cultural Innovation Award:</strong> Jaga's Sinhala name and cultural significance</span></li>
+                        </ul>
+                        <div class="flex flex-wrap gap-3 mt-6">
+                            <span class="bg-[#141414] border border-white/5 rounded-xl px-4 py-2 text-sm"><span class="font-bold text-[#dd4927]">Senior</span> <span class="text-gray-500">Category</span></span>
+                            <span class="bg-[#141414] border border-white/5 rounded-xl px-4 py-2 text-sm"><span class="font-bold text-[#dd4927]">Champions</span> <span class="text-gray-500">WRO 2026</span></span>
+                            <span class="bg-[#141414] border border-white/5 rounded-xl px-4 py-2 text-sm"><span class="font-bold text-[#dd4927]">Buhari</span> <span class="text-gray-500">Serendib School</span></span>
+                        </div>
+                    </div>
+                    <div class="flex-1 reveal-right">
+                        <div class="card p-5 sm:p-6 h-full">
+                            <div class="flex items-center justify-between border-b border-white/5 pb-3 mb-5">
+                                <h4 class="text-lg font-bold text-white">Event Timeline</h4>
+                                <i class="fas fa-calendar-alt text-[#dd4927]"></i>
+                            </div>
+                            <div class="relative pl-8">
+                                <div class="timeline-line"></div>
+                                <div class="timeline-item relative pb-6">
+                                    <div class="timeline-dot" style="top:4px"></div>
+                                    <div class="bg-[#dd4927]/10 rounded-xl p-3 ml-4 border border-[#dd4927]/30">
+                                        <div class="flex items-center justify-between"><span class="font-bold text-white text-sm">Registration & Setup</span><span class="text-[10px] text-[#dd4927] bg-[#0a0a0a] px-2 py-0.5 rounded-full">Jan 2026</span></div>
+                                        <p class="text-xs text-gray-400 mt-0.5">Team registration and robot calibration.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item relative pb-6">
+                                    <div class="timeline-dot" style="top:4px"></div>
+                                    <div class="bg-[#dd4927]/10 rounded-xl p-3 ml-4 border border-[#dd4927]/30">
+                                        <div class="flex items-center justify-between"><span class="font-bold text-white text-sm">Technical Inspection</span><span class="text-[10px] text-[#dd4927] bg-[#0a0a0a] px-2 py-0.5 rounded-full">Feb 2026</span></div>
+                                        <p class="text-xs text-gray-400 mt-0.5">Judges verified all sensors and app functionality.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item relative pb-6">
+                                    <div class="timeline-dot" style="top:4px"></div>
+                                    <div class="bg-[#dd4927]/10 rounded-xl p-3 ml-4 border border-[#dd4927]/30">
+                                        <div class="flex items-center justify-between"><span class="font-bold text-white text-sm">Live Demo Day</span><span class="text-[10px] text-[#dd4927] bg-[#0a0a0a] px-2 py-0.5 rounded-full">Mar 2026</span></div>
+                                        <p class="text-xs text-gray-400 mt-0.5">Jaga navigated the obstacle course flawlessly.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item relative">
+                                    <div class="timeline-dot" style="top:4px"></div>
+                                    <div class="bg-[#dd4927]/20 rounded-xl p-3 ml-4 border border-[#dd4927]">
+                                        <div class="flex items-center justify-between"><span class="font-bold text-[#dd4927] text-sm">CHAMPIONS!</span><span class="text-[10px] text-[#dd4927] bg-[#0a0a0a] px-2 py-0.5 rounded-full font-bold">Apr 2026</span></div>
+                                        <p class="text-xs text-gray-300 mt-0.5">Awarded Senior Category Champions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-5 bg-[#dd4927]/10 border border-[#dd4927]/40 rounded-xl p-3 text-center">
+                                <p class="text-xs text-gray-300">Jaga represents Sri Lankan innovation on the world stage.</p>
+                                <p class="text-[#dd4927] font-semibold text-xs font-display mt-1">ජාගරණය — Always awake, always aware.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="section-divider"></div>
+
+        <!-- ========== CTA ========== -->
+        <section class="py-16 sm:py-20 bg-[#0a0a0a]">
+            <div class="container mx-auto px-4 sm:px-6 text-center">
+                <div class="max-w-3xl mx-auto reveal">
+                    <span class="inline-flex items-center gap-2 bg-[#141414] border border-white/5 rounded-full px-4 py-1.5 text-sm text-gray-300"><i class="fas fa-rocket text-[#dd4927]"></i> The Future of Mobility</span>
+                    <h2 class="section-title text-white mt-6">Help Shape the Future of Jaga</h2>
+                    <p class="text-gray-400 text-sm mt-4 leading-relaxed">Your feedback matters. Take our survey and help us build a better, more accessible future.</p>
+                    <div class="flex flex-wrap gap-4 justify-center mt-8">
+                        <a href="#survey" class="btn-primary"><i class="fas fa-clipboard-list"></i> Take the Survey</a>
+                        <a href="#team" class="btn-secondary"><i class="fas fa-envelope"></i> Contact Team</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIVIDER -->
+        <div class="section-divider"></div>
+
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-[#0a0a0a] pt-12 pb-6 border-t border-white/5">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-8 border-b border-white/5 pb-8">
+                <div>
+                    <div class="flex items-center gap-2 text-xl font-bold text-white font-display"><i class="fas fa-dog text-[#dd4927] float"></i> Jaga <span class="text-[#dd4927]">|</span> ජාගරණය</div>
+                    <p class="text-gray-500 text-sm mt-2 max-w-xs">The Alert Guardian — always awake, always aware. Empowering independence through innovation.</p>
+                    <div class="flex gap-3 mt-4">
+                        <a href="#" class="w-9 h-9 bg-[#141414] rounded-full flex items-center justify-center text-gray-500 hover:bg-[#dd4927] hover:text-white transition"><i class="fab fa-twitter text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 bg-[#141414] rounded-full flex items-center justify-center text-gray-500 hover:bg-[#dd4927] hover:text-white transition"><i class="fab fa-instagram text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 bg-[#141414] rounded-full flex items-center justify-center text-gray-500 hover:bg-[#dd4927] hover:text-white transition"><i class="fab fa-youtube text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 bg-[#141414] rounded-full flex items-center justify-center text-gray-500 hover:bg-[#dd4927] hover:text-white transition"><i class="fab fa-github text-sm"></i></a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-8">
+                    <div>
+                        <h5 class="text-white font-semibold text-sm mb-3">Explore</h5>
+                        <ul class="space-y-1.5 text-sm">
+                            <li><a href="#mission" class="text-gray-500 hover:text-[#dd4927] transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px] text-[#dd4927]"></i> Mission</a></li>
+                            <li><a href="#problem" class="text-gray-500 hover:text-[#dd4927] transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px] text-[#dd4927]"></i> Problem</a></li>
+                            <li><a href="#meet-jaga" class="text-gray-500 hover:text-[#dd4927] transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px] text-[#dd4927]"></i> Meet Jaga</a></li>
+                            <li><a href="#specs" class="text-gray-500 hover:text-[#dd4927] transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px] text-[#dd4927]"></i> Specs</a></li>
+                            <li><a href="#pricing" class="text-gray-500 hover:text-[#dd4927] transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px] text-[#dd4927]"></i> Pricing</a></li>
+                            <li><a href="#survey" class="text-gray-500 hover:text-[#dd4927] transition flex items-center gap-2"><i class="fas fa-chevron-right text-[10px] text-[#dd4927]"></i> Survey</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-white font-semibold text-sm mb-3">Contact</h5>
+                        <ul class="space-y-1.5 text-sm text-gray-500">
+                            <li class="flex items-center gap-2"><i class="fas fa-envelope text-[#dd4927] w-4 text-xs"></i> ometh@jaga.ai</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-envelope text-[#dd4927] w-4 text-xs"></i> sineth@jaga.ai</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-envelope text-[#dd4927] w-4 text-xs"></i> nethika@jaga.ai</li>
+                        </ul>
+                        <div class="mt-4 p-3 bg-[#141414] rounded-xl border border-white/5">
+                            <p class="text-xs text-gray-500">Based in Sri Lanka</p>
+                            <p class="text-xs text-gray-500 mt-0.5">World Robotics Competition 2026</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center text-gray-600 text-xs mt-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+                <span>&copy; 2026 Jaga Robotics | WRO 2026 Senior Category Champions</span>
+                <span class="text-[#dd4927] font-display">ජාගරණය — Always awake, always aware.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="backToTop" class="back-to-top"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        // ===== Scroll Progress =====
+        const progress = document.getElementById('scrollProgress');
+        window.addEventListener('scroll', () => {
+            const scroll = window.scrollY;
+            const height = document.documentElement.scrollHeight - window.innerHeight;
+            progress.style.width = (scroll / height) * 100 + '%';
+        });
+
+        // ===== Mobile Menu =====
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            menuBtn.innerHTML = mobileMenu.classList.contains('open') ?
+                '<i class="fas fa-times"></i>' :
+                '<i class="fas fa-bars"></i>';
+        });
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // ===== Active Nav Link =====
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const top = section.offsetTop - 120;
+                if (window.scrollY >= top) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.dataset.section === current);
+            });
+        });
+
+        // ===== Scroll Reveal =====
+        const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        revealEls.forEach(el => observer.observe(el));
+
+        // ===== WHO Stat Counter =====
+        function animateCounter(elementId, target, suffix = '', duration = 2500) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(eased * target);
+                el.textContent = current + suffix;
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = target + suffix;
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        const whoCard = document.querySelector('.jaga-v3-stat-card');
+        if (whoCard) {
+            const whoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter('whoCounter', 27, '%', 2500);
+                        animateCounter('whoBillionCounter', 2.2, '', 2000);
+                        whoObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            whoObserver.observe(whoCard);
+        }
+
+        // ===== TRIGGER DRAMATIC SPOTLIGHT ON SCROLL =====
+        const jagaSection = document.getElementById('meet-jaga');
+        if (jagaSection) {
+            const triggerObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !jagaSection.classList.contains('triggered')) {
+                        jagaSection.classList.add('triggered');
+                    }
+                });
+            }, { threshold: 0.15 });
+            triggerObserver.observe(jagaSection);
+        }
+
+        // ===== Back to Top =====
+        const backBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backBtn.classList.toggle('visible', window.scrollY > 500);
+        });
+        backBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ===== Navbar background on scroll =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.style.background = window.scrollY > 50 ? '#0a0a0a' : '#0a0a0a/95';
+        });
+
+        // ===== Smooth anchor scroll =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ===== Hero image fallback =====
+        const heroImg = document.getElementById('heroImg');
+        if (heroImg) {
+            heroImg.addEventListener('error', () => {
+                heroImg.style.display = 'none';
+                const fallback = heroImg.nextElementSibling;
+                if (fallback) fallback.style.display = 'flex';
+            });
+        }
+    </script>
+</body>
+</html>
